@@ -2,15 +2,15 @@
 
 /**
  *swap - swaps two integers.
- *@xp: Pointer to the first integer.
- *@yp: Pointer tothe second integer.
+ *@x: Pointer to the first integer.
+ *@y: Pointer tothe second integer.
  *Return: Nothing.
  */
-void swap(int *xp, int *yp)
+void swap(int *x, int *y)
 {
-	int temp = *xp;
-	*xp = *yp;
-	*yp = temp;
+	int temp = *x;
+	*x = *y;
+	*y = temp;
 }
 
 /**
