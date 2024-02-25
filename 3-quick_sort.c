@@ -1,71 +1,79 @@
 #include "sort.h"
 
 /**
- * custom_swap - swaps two integers in an array
- * @first_element: pointer to the first element
- * @second_element: pointer to the second element
+ * _swap - swaps two numbers.
+ * @a: integer
+ * @b: integer
  */
-void custom_swap(int *first_element, int *second_element) {
-    int temp = *first_element;
-    *first_element = *second_element;
-    *second_element = temp;
+void _swap(int *a, int *b)
+{
+    int tmp;
+
+    tmp = *a;
+    *a = *b;
+    *b = tmp;
 }
 
 /**
- * custom_partition - partitions the array using Lomuto scheme
+ * _split - splits the array and takes the last element as pivot
  * @arr: input array
- * @left_index: index of the first element
- * @right_index: index of the last element
- * @size: size of the array
- * Return: integer representing the pivot position
+ * @min: first element
+ * @last: The last element
+ * @size: size
+ * Return: integer
  */
-int custom_partition(int *arr, int left_index, int right_index, size_t size) {
-    int pivot_value;
-    int i = left_index;
+int _split(int *arr, int min, int last, size_t size)
+{
+    int piv;
+    int i = min - 1;
+    int j;
 
-    pivot_value = arr[right_index];
-
-    for (int j = left_index; j < right_index; j++) {
-        if (arr[j] <= pivot_value) {
-            custom_swap(&arr[i], &arr[j]);
-            if (i != j)
-                print_array(arr, size);
+    piv = arr[last];
+    for (j = min; j < last; j++)
+    {
+        if (arr[j] <= piv)
+        {
             i++;
+            _swap(&arr[i], &arr[j]);
+            print_array(arr, size);
         }
     }
-
-    custom_swap(&arr[i], &arr[right_index]);
-    if (i != right_index) {
+    _swap(&arr[i + 1], &arr[last]);
+    if (i + 1 != j)
+    {
         print_array(arr, size);
     }
-
-    return i;
+    return (i + 1);
 }
 
 /**
- * quick_sort_array - sorts the array using QuickSort algorithm
- * @arr: input array
- * @left_index: index of the first element
- * @right_index: index of the last element
- * @size: size of the array
+ * quick_sort_array - quick_sort_array
+ * @arr: arr
+ * @min: min
+ * @last: last
+ * @size: size
  */
-void quick_sort_array(int *arr, int left_index, int right_index, size_t size) {
-    int pivot;
+void quick_sort_array(int *arr, int min, int last, size_t size)
+{
+    int piv;
 
-    if (left_index < right_index) {
-        pivot = custom_partition(arr, left_index, right_index, size);
-        quick_sort_array(arr, left_index, pivot - 1, size);
-        quick_sort_array(arr, pivot + 1, right_index, size);
+    if (min < last)
+    {
+        piv = _split(arr, min, last, size);
+        quick_sort_array(arr, min, piv - 1, size);
+        quick_sort_array(arr, piv + 1, last, size);
     }
 }
 
 /**
- * quick_sort - sorts an array using QuickSort algorithm
- * @array: input array
- * @size: size of the array
- */
-void quick_sort(int *array, size_t size) {
-    if (size < 2) {
+ * quick_sort - Sort an array using quick_sort algorithm
+ * @array: array
+ * @size: size
+ **/
+void quick_sort(int *array, size_t size)
+{
+    if (size < 2)
+    {
         return;
     }
     quick_sort_array(array, 0, size - 1, size);
